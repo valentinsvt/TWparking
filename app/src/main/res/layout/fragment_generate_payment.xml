@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modules.payments.GeneratePaymentView"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:layout_editor_absoluteY="137dp">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/generate_payment_left_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/generate_payment_right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <Spinner
+        android:id="@+id/month_spinner"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="76dp"
+        android:background="?attr/colorButtonNormal"
+        android:entries="@color/colorPrimary"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toStartOf="@+id/generate_payment_right_guideline"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/generate_payment_left_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/year_spinner"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:background="?attr/colorButtonNormal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toStartOf="@+id/generate_payment_right_guideline"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/generate_payment_left_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/month_spinner" />
+
+
+    <Button
+        android:id="@+id/generate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:background="?attr/colorPrimary"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/generate_payments_button"
+        android:textColor="?attr/colorBackgroundFloating"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/generate_payment_right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/generate_payment_left_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/year_spinner" />
+</android.support.constraint.ConstraintLayout>
