@@ -1,21 +1,23 @@
 package com.lzm.svt.twparking.modules.payments
 
 import android.support.v4.app.Fragment
+import com.lzm.svt.twparking.MainWireframe
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.contracts.WireframeContracts
 
-class PaymentsWireframe : WireframeContracts.AppWireframe {
+class PaymentsWireframe(override var mainWireframe: MainWireframe) : WireframeContracts.AppWireframe {
+
     override fun open(itemId: Int): Fragment? {
-        val context = this
+        val router = this
         when (itemId) {
             R.id.drawer_payments_option -> {
                 val generatePaymentFragment = GeneratePaymentView()
                 val interactor = PaymentInteractor()
-                val presenter = GeneratePaymentPresenter()
+                val presenter = PaymentPresenter()
                 presenter.interactor = interactor
                 presenter.view = generatePaymentFragment
+                presenter.router = router
                 generatePaymentFragment.presenter = presenter
-                generatePaymentFragment.router = context
                 return generatePaymentFragment
             }
         }

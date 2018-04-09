@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        MainWireframe.getCurrentInstance().open( this, item)
+        MainWireframe.getCurrentInstance(this).open( this, item)
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

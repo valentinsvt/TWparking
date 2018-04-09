@@ -1,19 +1,24 @@
 package com.lzm.svt.twparking.modules.payments
 
+import com.lzm.svt.twparking.BFFClient
+import com.lzm.svt.twparking.contracts.HttpContracts
+
 class Contracts {
     interface PaymentsPresenterType {
         var interactor: PaymentsInteractorType?
         var view: PaymentsViewType?
+        var router: PaymentsWireframe?
         fun onGeneratePaymentsViewCreated()
         fun generateButtonPressed(month: String, year: String)
     }
     interface PaymentsInteractorType {
         fun loadMonthAndYearSpinners(delegate: GeneratePaymentsDelegate)
+        fun createPayments(delegate: GeneratePaymentsDelegate, month: String, year: String, client: BFFClient)
     }
     interface PaymentsViewType {
         fun populateSpinners(months: Array<String>, years: Array<Int>)
     }
-    interface GeneratePaymentsDelegate {
+    interface GeneratePaymentsDelegate: HttpContracts.HttpDelegate {
         fun spinnersLoaded(months: Array<String>, years: Array<Int>)
     }
 }

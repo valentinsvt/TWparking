@@ -1,11 +1,12 @@
 package com.lzm.svt.twparking
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.MenuItem
 import com.lzm.svt.twparking.contracts.WireframeContracts
 import com.lzm.svt.twparking.modules.payments.PaymentsWireframe
 
-class MainWireframe {
+class MainWireframe(var bffClient: BFFClient) {
     var routers = arrayListOf<WireframeContracts.AppWireframe>()
 
     fun open(delegate: WireframeContracts.WireframeDelegate, selectedOption: MenuItem){
@@ -22,8 +23,8 @@ class MainWireframe {
         @JvmStatic
         private var instance: MainWireframe? = null
 
-        fun getCurrentInstance(): MainWireframe {
-            val currentInstance = this.instance?.let { it } ?: MainWireframe().apply { routers.add(PaymentsWireframe()) }
+        fun getCurrentInstance(context: Context): MainWireframe {
+            val currentInstance = this.instance?.let { it } ?: MainWireframe(BFFClient(NetworkQueue.getInstance(context))).apply { routers.add(PaymentsWireframe(this)) }
             this.instance = currentInstance
             return currentInstance
         }

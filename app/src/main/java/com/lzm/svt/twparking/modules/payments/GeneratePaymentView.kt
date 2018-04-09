@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_generate_payment.*
 class GeneratePaymentView : Fragment(), Contracts.PaymentsViewType {
     private var listener: FragmentContracts.OnFragmentInteractionListener? = null
     var presenter: Contracts.PaymentsPresenterType? = null
-    var router: PaymentsWireframe? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
