@@ -1,6 +1,8 @@
 package com.lzm.svt.twparking
 
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.IdRes
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        MainWireframe.getCurrentInstance(this).open( this, item)
+        MainWireframe.getCurrentInstance(this).open(this, item)
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -60,9 +62,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onFragmentInteraction(uri: Uri) {}
 
     override fun showFragment(fragment: Fragment) {
-        replaceFragmentSafely(fragment,"test",false, R.id.fragment_container )
+        replaceFragmentSafely(fragment, "test", false, R.id.fragment_container)
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
     }
 }
+
 fun AppCompatActivity.replaceFragmentSafely(fragment: Fragment, tag: String, allowStateLoss: Boolean = false, @IdRes containerViewId: Int) {
     val ft = supportFragmentManager
             .beginTransaction()
@@ -73,6 +82,4 @@ fun AppCompatActivity.replaceFragmentSafely(fragment: Fragment, tag: String, all
         ft.commitAllowingStateLoss()
     }
 }
-
-
 
