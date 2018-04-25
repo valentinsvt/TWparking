@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         if (token != "NA") {
             goToMain()
         }
-        
+
         setContentView(R.layout.activity_login)
 
         // Set up the login form.

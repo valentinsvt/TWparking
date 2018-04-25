@@ -26,4 +26,19 @@
     <string name="pref_token_key">token_key</string>
     <string name="pref_userId_key">userId_key</string>
     <string name="pref_file_key">preferences</string>
+
+    <string-array name="month_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>

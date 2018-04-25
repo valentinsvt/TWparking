@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val userId = sharedPref.getInt(getString(R.string.pref_userId_key), -1)
         val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
 
-
     }
 
     override fun onBackPressed() {
