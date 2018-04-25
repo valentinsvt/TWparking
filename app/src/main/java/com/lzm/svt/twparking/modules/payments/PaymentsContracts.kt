@@ -3,7 +3,7 @@ package com.lzm.svt.twparking.modules.payments
 import com.lzm.svt.twparking.BFFClient
 import com.lzm.svt.twparking.contracts.HttpContracts
 
-class Contracts {
+class PaymentsContracts {
     interface PaymentsPresenterType {
         var interactor: PaymentsInteractorType?
         var view: PaymentsViewType?

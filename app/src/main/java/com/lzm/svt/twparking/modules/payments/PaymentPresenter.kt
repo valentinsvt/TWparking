@@ -2,7 +2,7 @@ package com.lzm.svt.twparking.modules.payments
 
 import org.json.JSONObject
 
-class PaymentPresenter: Contracts.PaymentsPresenterType, Contracts.GeneratePaymentsDelegate {
+class PaymentPresenter: PaymentsContracts.PaymentsPresenterType, PaymentsContracts.GeneratePaymentsDelegate {
     override fun success(response: JSONObject) {
         println("---->  " + response.get("result"))
     }
@@ -12,8 +12,8 @@ class PaymentPresenter: Contracts.PaymentsPresenterType, Contracts.GeneratePayme
 
     }
 
-    override var view: Contracts.PaymentsViewType? = null
-    override var interactor: Contracts.PaymentsInteractorType? = null
+    override var view: PaymentsContracts.PaymentsViewType? = null
+    override var interactor: PaymentsContracts.PaymentsInteractorType? = null
     override var router: PaymentsWireframe? = null
 
     override fun onGeneratePaymentsViewCreated() {

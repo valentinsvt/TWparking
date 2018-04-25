@@ -13,9 +13,9 @@ import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.contracts.FragmentContracts
 import kotlinx.android.synthetic.main.fragment_generate_payment.*
 
-class GeneratePaymentView : Fragment(), Contracts.PaymentsViewType {
+class GeneratePaymentView : Fragment(), PaymentsContracts.PaymentsViewType {
     private var listener: FragmentContracts.OnFragmentInteractionListener? = null
-    var presenter: Contracts.PaymentsPresenterType? = null
+    var presenter: PaymentsContracts.PaymentsPresenterType? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

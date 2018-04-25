@@ -3,8 +3,8 @@ package com.lzm.svt.twparking.modules.payments
 import com.lzm.svt.twparking.BFFClient
 import java.util.*
 
-class PaymentInteractor : Contracts.PaymentsInteractorType {
-    override fun loadMonthAndYearSpinners(delegate: Contracts.GeneratePaymentsDelegate) {
+class PaymentInteractor : PaymentsContracts.PaymentsInteractorType {
+    override fun loadMonthAndYearSpinners(delegate: PaymentsContracts.GeneratePaymentsDelegate) {
         val months = arrayOf("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
                 "Octubre", "Noviembre", "Diciembre")
 
@@ -13,7 +13,7 @@ class PaymentInteractor : Contracts.PaymentsInteractorType {
         delegate.spinnersLoaded(months, years)
     }
 
-    override fun createPayments(delegate: Contracts.GeneratePaymentsDelegate, month: String, year: String, client: BFFClient) {
+    override fun createPayments(delegate: PaymentsContracts.GeneratePaymentsDelegate, month: String, year: String, client: BFFClient) {
         val path = "payments/createForMonth"
         val params = HashMap<String, String>()
         params["month"] = month
