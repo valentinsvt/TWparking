@@ -25,7 +25,17 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPref = this.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+                ?: return
+        val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+
+        if (token != "NA") {
+            goToMain()
+        }
+        
         setContentView(R.layout.activity_login)
+
         // Set up the login form.
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -118,9 +128,7 @@ class LoginActivity : AppCompatActivity() {
                         apply()
                     }
 
-                    val intent = MainActivity.newIntent(this)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    goToMain()
                 },
                 Response.ErrorListener {
                     showProgress(false)
@@ -147,6 +155,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         networkQueue.addToRequestQueue(postRequest)
+    }
+
+    private fun goToMain() {
+        val intent = MainActivity.newIntent(this)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
