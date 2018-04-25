@@ -1,6 +1,5 @@
 package com.lzm.svt.twparking
 
-
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -31,6 +30,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        val sharedPref = this.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+                ?: return
+        val userId = sharedPref.getInt(getString(R.string.pref_userId_key), -1)
+        val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+
+
     }
 
     override fun onBackPressed() {
