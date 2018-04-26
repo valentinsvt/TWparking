@@ -14,10 +14,20 @@ import android.view.Menu
 import android.view.MenuItem
 import com.lzm.svt.twparking.contracts.FragmentContracts
 import com.lzm.svt.twparking.contracts.WireframeContracts
+import com.lzm.svt.twparking.modules.charges.ChargesListFragment
+import com.lzm.svt.twparking.modules.charges.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, FragmentContracts.OnFragmentInteractionListener, WireframeContracts.WireframeDelegate {
+class MainActivity : AppCompatActivity(),
+        NavigationView.OnNavigationItemSelectedListener,
+        FragmentContracts.OnFragmentInteractionListener,
+        ChargesListFragment.OnListFragmentInteractionListener,
+        WireframeContracts.WireframeDelegate {
+
+    override fun onChargePressed(item: DummyContent.DummyItem?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

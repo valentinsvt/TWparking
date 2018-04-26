@@ -21,7 +21,7 @@ class ChargesWireframe(override var mainWireframe: MainWireframe) : WireframeCon
                 return generateChargesFragment
             }
             R.id.drawer_charges_list_option -> {
-
+                return ChargesListFragment.newInstance(1)
             }
         }
         return null
