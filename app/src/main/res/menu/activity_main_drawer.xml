@@ -3,13 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/drawer_group_payments"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_payments_option"
-            android:title="@string/navigation_payments" />
+            android:id="@+id/drawer_payments_list_option"
+            android:title="@string/navigation_payments_list" />
         <item
-            android:id="@+id/drawer_charges_option"
-            android:title="@string/navigation_charges" />
+            android:id="@+id/drawer_payments_generate_option"
+            android:title="@string/navigation_payments_generate" />
+
     </group>
+    <group
+        android:id="@+id/drawer_group_charges"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_charges_list_option"
+            android:title="@string/navigation_charges_list" />
+        <item
+            android:id="@+id/drawer_charges_generate_option"
+            android:title="@string/navigation_charges_generate" />
+    </group>
+
 
 </menu>

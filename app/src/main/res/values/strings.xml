@@ -39,18 +39,20 @@
   <string name="nav_header_subtitle">Nth</string>
   <string name="nav_header_title">TW Parking</string>
 
-  <string name="navigation_charges">Generar cobros</string>
+  <string name="navigation_charges_generate">Generar cobros</string>
+  <string name="navigation_charges_list">Lista de cobros</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
   <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_payments">Generar pagos</string>
+  <string name="navigation_payments_generate">Generar pagos</string>
+  <string name="navigation_payments_list">Lista de pagos</string>
 
   <string name="payments_generate_button">Generar pagos</string>
   <string name="payments_title">Pagos</string>
 
   <string name="pref_file_key">preferences</string>
   <string name="pref_token_key">token_key</string>
-  <string name="pref_userId_key">userId_key</string>
   <string name="pref_userEmail_key">userEmail_key</string>
-  <string name="pref_userName_key">userName_key</string>
+  <string name="pref_userId_key">userId_key</string>
   <string name="pref_userIsAdmin_key">userIsAdmin_key</string>
+  <string name="pref_userName_key">userName_key</string>
 </resources>

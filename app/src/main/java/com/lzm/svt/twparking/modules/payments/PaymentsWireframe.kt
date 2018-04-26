@@ -10,7 +10,7 @@ class PaymentsWireframe(override var mainWireframe: MainWireframe) : WireframeCo
     override fun open(itemId: Int): Fragment? {
         val router = this
         when (itemId) {
-            R.id.drawer_payments_option -> {
+            R.id.drawer_payments_generate_option -> {
                 val generatePaymentFragment = GeneratePaymentView()
                 val interactor = PaymentInteractor()
                 val presenter = PaymentPresenter()

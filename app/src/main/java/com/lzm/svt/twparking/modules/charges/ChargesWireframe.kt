@@ -10,7 +10,7 @@ class ChargesWireframe(override var mainWireframe: MainWireframe) : WireframeCon
     override fun open(itemId: Int): Fragment? {
         val router = this
         when (itemId) {
-            R.id.drawer_charges_option -> {
+            R.id.drawer_charges_generate_option -> {
                 val generateChargesFragment = GenerateChargeView()
                 val interactor = ChargeInteractor()
                 val presenter = ChargePresenter()
