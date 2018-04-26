@@ -27,12 +27,12 @@ class GeneratePaymentView : Fragment(), PaymentsContracts.PaymentsViewType {
         presenter?.onGeneratePaymentsViewCreated()
         generate_button.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.generate_payments_button)
+            dialogBuilder.setTitle(R.string.payments_generate_button)
             dialogBuilder.setMessage(R.string.confirmation_message)
-            dialogBuilder.setPositiveButton(R.string.continue_message, DialogInterface.OnClickListener { _, _ ->
+            dialogBuilder.setPositiveButton(R.string.confirmation_continue_button, DialogInterface.OnClickListener { _, _ ->
                 presenter?.generateButtonPressed(month_spinner.selectedItem.toString(), year_spinner.selectedItem.toString())
             })
-            dialogBuilder.setNegativeButton(R.string.cancel_message, DialogInterface.OnClickListener { _, _ -> })
+            dialogBuilder.setNegativeButton(R.string.confirmation_cancel_button, DialogInterface.OnClickListener { _, _ -> })
             dialogBuilder.create().show()
         }
     }

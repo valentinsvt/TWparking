@@ -30,13 +30,9 @@ class LoginActivity : AppCompatActivity() {
                 ?: return
         val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
 
-        if (token != "NA") {
-            goToMain()
-        }
 
         setContentView(R.layout.activity_login)
 
-        // Set up the login form.
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
@@ -44,6 +40,10 @@ class LoginActivity : AppCompatActivity() {
             }
             false
         })
+
+        if (token != "NA") {
+            validateSession()
+        }
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }
@@ -62,18 +62,18 @@ class LoginActivity : AppCompatActivity() {
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            password.error = getString(R.string.error_invalid_password)
+            password.error = getString(R.string.login_error_invalid_password)
             focusView = password
             cancel = true
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(emailStr)) {
-            email.error = getString(R.string.error_field_required)
+            email.error = getString(R.string.login_error_field_required)
             focusView = email
             cancel = true
         } else if (!isEmailValid(emailStr)) {
-            email.error = getString(R.string.error_invalid_email)
+            email.error = getString(R.string.login_error_invalid_email)
             focusView = email
             cancel = true
         }
@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true)
-            makePostRequest(emailStr, passwordStr)
+            loginPostRequest(emailStr, passwordStr)
 
 //            mAuthTask = UserLoginTask(this, emailStr, passwordStr)
 //            mAuthTask!!.execute(null as Void?)
@@ -103,7 +103,37 @@ class LoginActivity : AppCompatActivity() {
         return password.length > 4
     }
 
-    private fun makePostRequest(mEmail: String, mPassword: String) {
+    private fun validateSession() {
+        val sharedPref = this.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+                ?: return
+        val userId = sharedPref.getInt(getString(R.string.pref_userId_key), -1)
+        val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+
+        val networkQueue = NetworkQueue.getInstance(this)
+        val url = "https://twparking-staging.herokuapp.com/api/"
+        val path = "People/$userId"
+
+        showProgress(true)
+        val getRequest = object : JsonObjectRequest(Method.GET, url + path, null,
+                Response.Listener {
+                    goToMain()
+                },
+                Response.ErrorListener {
+                    showProgress(false)
+                }
+        ) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Content-Type"] = "application/json"
+                headers["Accept"] = "application/json"
+                headers["Authorization"] = token
+                return headers
+            }
+        }
+        networkQueue.addToRequestQueue(getRequest)
+    }
+
+    private fun loginPostRequest(mEmail: String, mPassword: String) {
         val networkQueue = NetworkQueue.getInstance(this)
         val url = "https://twparking-staging.herokuapp.com/api/"
         val path = "People/login"
@@ -114,28 +144,25 @@ class LoginActivity : AppCompatActivity() {
         requestParams["email"] = mEmail
         requestParams["password"] = mPassword
 
-
         val postRequest = object : JsonObjectRequest(Method.POST, url + path, null,
                 Response.Listener { response ->
                     showProgress(false)
-                    val token = response.get("id")
-                    val userId = response.get("userId")
+                    val isActive = storeResponse(response, activity)
 
-                    val sharedPref = activity.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
-                    with(sharedPref.edit()) {
-                        putString(getString(R.string.pref_token_key), token as String)
-                        putInt(getString(R.string.pref_userId_key), userId as Int)
-                        apply()
+                    if (isActive) {
+                        goToMain()
+                    } else {
+                        password.error = getString(R.string.login_error_incorrect_password)
+                        password.requestFocus()
                     }
-
-                    goToMain()
                 },
                 Response.ErrorListener {
                     showProgress(false)
                     println("----------------------------------------------------------------")
                     println("ERROR!!!")
+                    println(it)
                     println("----------------------------------------------------------------")
-                    password.error = getString(R.string.error_incorrect_password)
+                    password.error = getString(R.string.login_error_incorrect_password)
                     password.requestFocus()
                 }
         ) {
@@ -157,6 +184,29 @@ class LoginActivity : AppCompatActivity() {
         networkQueue.addToRequestQueue(postRequest)
     }
 
+    private fun LoginActivity.storeResponse(response: JSONObject, activity: LoginActivity): Boolean {
+        val token = response.get("id")
+        val userId = response.get("userId")
+        val userData = JSONObject(response.get("userData").toString())
+        val email = userData.get("email")
+        val name = userData.get("name")
+        val isActive = userData.get("isActive") as Boolean
+        val isAdmin = userData.get("isAdmin")
+
+        if (isActive) {
+            val sharedPref = activity.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+            with(sharedPref.edit()) {
+                putString(getString(R.string.pref_token_key), token as String)
+                putString(getString(R.string.pref_userEmail_key), email as String)
+                putString(getString(R.string.pref_userName_key), name as String)
+                putInt(getString(R.string.pref_userId_key), userId as Int)
+                putBoolean(getString(R.string.pref_userIsAdmin_key), isAdmin as Boolean)
+                apply()
+            }
+        }
+        return isActive
+    }
+
     private fun goToMain() {
         val intent = MainActivity.newIntent(this)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -165,36 +215,26 @@ class LoginActivity : AppCompatActivity() {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private fun showProgress(show: Boolean) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+        val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
-            login_form.visibility = if (show) View.GONE else View.VISIBLE
-            login_form.animate()
-                    .setDuration(shortAnimTime)
-                    .alpha((if (show) 0 else 1).toFloat())
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            login_form.visibility = if (show) View.GONE else View.VISIBLE
-                        }
-                    })
+        login_form.visibility = if (show) View.GONE else View.VISIBLE
+        login_form.animate()
+                .setDuration(shortAnimTime)
+                .alpha((if (show) 0 else 1).toFloat())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        login_form.visibility = if (show) View.GONE else View.VISIBLE
+                    }
+                })
 
-            login_progress.visibility = if (show) View.VISIBLE else View.GONE
-            login_progress.animate()
-                    .setDuration(shortAnimTime)
-                    .alpha((if (show) 1 else 0).toFloat())
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            login_progress.visibility = if (show) View.VISIBLE else View.GONE
-                        }
-                    })
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            login_progress.visibility = if (show) View.VISIBLE else View.GONE
-            login_form.visibility = if (show) View.GONE else View.VISIBLE
-        }
+        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+        login_progress.animate()
+                .setDuration(shortAnimTime)
+                .alpha((if (show) 1 else 0).toFloat())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        login_progress.visibility = if (show) View.VISIBLE else View.GONE
+                    }
+                })
     }
 }

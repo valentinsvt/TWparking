@@ -33,8 +33,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val sharedPref = this.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
                 ?: return
-        val userId = sharedPref.getInt(getString(R.string.pref_userId_key), -1)
         val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+        val userId = sharedPref.getInt(getString(R.string.pref_userId_key), -1)
+        val userName = sharedPref.getString(getString(R.string.pref_userName_key), "NA")
+        val userMail = sharedPref.getString(getString(R.string.pref_userEmail_key), "NA")
+
+        println("--------------------------------------------------------------")
+        println("$userId, $userName, $userMail")
+        println("--------------------------------------------------------------")
 
     }
 

@@ -6,10 +6,10 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_payments_option"
-            android:title="@string/payments_title" />
+            android:title="@string/navigation_payments" />
         <item
             android:id="@+id/drawer_charges_option"
-            android:title="@string/charges_title" />
+            android:title="@string/navigation_charges" />
     </group>
 
 </menu>
