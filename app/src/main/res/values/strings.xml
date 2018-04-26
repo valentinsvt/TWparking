@@ -7,7 +7,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="payments_title">Generar pagos</string>
+    <string name="charges_title">Generar cobros</string>
     <string name="generate_payments_button">Generar pagos</string>
+    <string name="generate_charges_button">Generar cobros</string>
     <string name="confirmation_message">Está seguro? Está acción no se puede deshacer</string>
     <string name="continue_message">Yolo</string>
     <string name="cancel_message">Cancelar</string>

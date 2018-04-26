@@ -7,6 +7,9 @@
         <item
             android:id="@+id/drawer_payments_option"
             android:title="@string/payments_title" />
+        <item
+            android:id="@+id/drawer_charges_option"
+            android:title="@string/charges_title" />
     </group>
 
 </menu>
