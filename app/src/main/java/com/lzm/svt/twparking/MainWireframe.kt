@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.MenuItem
 import com.lzm.svt.twparking.contracts.WireframeContracts
+import com.lzm.svt.twparking.modules.charges.ChargesWireframe
 import com.lzm.svt.twparking.modules.payments.PaymentsWireframe
 
 class MainWireframe(var bffClient: BFFClient) {
@@ -25,7 +26,10 @@ class MainWireframe(var bffClient: BFFClient) {
 
         fun getCurrentInstance(context: Context): MainWireframe {
             val currentInstance = this.instance?.let { it }
-                    ?: MainWireframe(BFFClient(NetworkQueue.getInstance(context))).apply { routers.add(PaymentsWireframe(this)) }
+                    ?: MainWireframe(BFFClient(NetworkQueue.getInstance(context))).apply {
+                        routers.add(PaymentsWireframe(this))
+                        routers.add(ChargesWireframe(this))
+                    }
             this.instance = currentInstance
             return currentInstance
         }
