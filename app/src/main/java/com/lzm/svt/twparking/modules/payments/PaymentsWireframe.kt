@@ -11,9 +11,9 @@ class PaymentsWireframe(override var mainWireframe: MainWireframe) : WireframeCo
         val router = this
         when (itemId) {
             R.id.drawer_payments_generate_option -> {
-                val generatePaymentFragment = GeneratePaymentView()
-                val interactor = PaymentInteractor()
-                val presenter = PaymentPresenter()
+                val generatePaymentFragment = GeneratePaymentsView()
+                val interactor = PaymentsInteractor()
+                val presenter = PaymentsPresenter()
                 presenter.interactor = interactor
                 presenter.view = generatePaymentFragment
                 presenter.router = router

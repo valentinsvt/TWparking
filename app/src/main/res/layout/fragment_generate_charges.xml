@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
-    tools:context=".modules.charges.GenerateChargeView"
+    tools:context=".modules.charges.GenerateChargesView"
     tools:layout_editor_absoluteY="137dp">
 
     <android.support.constraint.Guideline

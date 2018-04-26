@@ -1,8 +1,8 @@
-package com.lzm.svt.twparking.modules.payments
+package com.lzm.svt.twparking.modules.charges
 
 import org.json.JSONObject
 
-class PaymentPresenter: PaymentsContracts.PaymentsPresenterType, PaymentsContracts.GeneratePaymentsDelegate {
+class ChargesPresenter: ChargesContracts.ChargesPresenterType, ChargesContracts.GenerateChargesDelegate {
     override fun success(response: JSONObject) {
         println("---->  " + response.get("result"))
     }
@@ -12,11 +12,11 @@ class PaymentPresenter: PaymentsContracts.PaymentsPresenterType, PaymentsContrac
 
     }
 
-    override var view: PaymentsContracts.PaymentsViewType? = null
-    override var interactor: PaymentsContracts.PaymentsInteractorType? = null
-    override var router: PaymentsWireframe? = null
+    override var view: ChargesContracts.ChargesViewType? = null
+    override var interactor: ChargesContracts.ChargesInteractorType? = null
+    override var router: ChargesWireframe? = null
 
-    override fun onGeneratePaymentsViewCreated() {
+    override fun onGenerateChargesViewCreated() {
         interactor?.loadMonthAndYearSpinners(this)
     }
 
@@ -26,7 +26,7 @@ class PaymentPresenter: PaymentsContracts.PaymentsPresenterType, PaymentsContrac
 
     override fun generateButtonPressed(month: String, year: String) {
         router?.let {
-            interactor?.createPayments(this, month, year, it.mainWireframe.bffClient)
+            interactor?.createCharges(this, month, year, it.mainWireframe.bffClient)
         }
     }
 }

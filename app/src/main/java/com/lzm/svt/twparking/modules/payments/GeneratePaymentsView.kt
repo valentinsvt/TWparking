@@ -11,15 +11,15 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.contracts.FragmentContracts
-import kotlinx.android.synthetic.main.fragment_generate_payment.*
+import kotlinx.android.synthetic.main.fragment_generate_payments.*
 
-class GeneratePaymentView : Fragment(), PaymentsContracts.PaymentsViewType {
+class GeneratePaymentsView : Fragment(), PaymentsContracts.PaymentsViewType {
     private var listener: FragmentContracts.OnFragmentInteractionListener? = null
     var presenter: PaymentsContracts.PaymentsPresenterType? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_generate_payment, container, false)
+        return inflater.inflate(R.layout.fragment_generate_payments, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,6 +70,6 @@ class GeneratePaymentView : Fragment(), PaymentsContracts.PaymentsViewType {
     companion object {
 
         @JvmStatic
-        fun newInstance() = GeneratePaymentView()
+        fun newInstance() = GeneratePaymentsView()
     }
 }

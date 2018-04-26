@@ -13,7 +13,7 @@ import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.contracts.FragmentContracts
 import kotlinx.android.synthetic.main.fragment_generate_charges.*
 
-class GenerateChargeView : Fragment(), ChargesContracts.ChargesViewType {
+class GenerateChargesView : Fragment(), ChargesContracts.ChargesViewType {
     private var listener: FragmentContracts.OnFragmentInteractionListener? = null
     var presenter: ChargesContracts.ChargesPresenterType? = null
 
@@ -70,6 +70,6 @@ class GenerateChargeView : Fragment(), ChargesContracts.ChargesViewType {
     companion object {
 
         @JvmStatic
-        fun newInstance() = GenerateChargeView()
+        fun newInstance() = GenerateChargesView()
     }
 }

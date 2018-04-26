@@ -11,14 +11,17 @@ class ChargesWireframe(override var mainWireframe: MainWireframe) : WireframeCon
         val router = this
         when (itemId) {
             R.id.drawer_charges_generate_option -> {
-                val generateChargesFragment = GenerateChargeView()
-                val interactor = ChargeInteractor()
-                val presenter = ChargePresenter()
+                val generateChargesFragment = GenerateChargesView()
+                val interactor = ChargesInteractor()
+                val presenter = ChargesPresenter()
                 presenter.interactor = interactor
                 presenter.view = generateChargesFragment
                 presenter.router = router
                 generateChargesFragment.presenter = presenter
                 return generateChargesFragment
+            }
+            R.id.drawer_charges_list_option -> {
+
             }
         }
         return null
