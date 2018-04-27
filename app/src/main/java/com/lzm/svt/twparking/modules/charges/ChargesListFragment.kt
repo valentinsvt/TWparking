@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.lzm.svt.twparking.R
-
-import kotlinx.android.synthetic.main.fragment_charge_list.*
-
 import com.lzm.svt.twparking.modules.charges.dummy.DummyContent
 import com.lzm.svt.twparking.modules.charges.dummy.DummyContent.DummyItem
+import java.util.*
 
 class ChargesListFragment : Fragment() {
 
@@ -34,21 +34,43 @@ class ChargesListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_charge_list, container, false)
 
-        println("-------------------------------------------------------------------------------")
-        println(view)
-        println(charges_list)
-        println("-------------------------------------------------------------------------------")
-        // Set the adapter
-        if (charges_list is RecyclerView) {
-            with(charges_list) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyChargeRecyclerViewAdapter(DummyContent.ITEMS, listener)
+        val chargesList = view.findViewById(R.id.charges_list) as RecyclerView
+        with(chargesList) {
+            layoutManager = when {
+                columnCount <= 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
             }
+            adapter = MyChargeRecyclerViewAdapter(DummyContent.ITEMS, listener)
         }
+
+        val months = arrayOf("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
+                "Octubre", "Noviembre", "Diciembre")
+
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val years = arrayOf(currentYear - 1, currentYear, currentYear + 1)
+
+        populateSpinners(view, months, years)
+
         return view
+    }
+
+
+    private fun populateSpinners(view: View, months: Array<String>, years: Array<Int>) {
+
+        val spinnerMonths = view.findViewById(R.id.spinner_months) as Spinner
+        val spinnerYears = view.findViewById(R.id.spinner_years) as Spinner
+
+        spinnerMonths.let {
+            val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item, months)
+            adapter.setDropDownViewResource(R.layout.spinner)
+            it.adapter = adapter
+        }
+
+        spinnerYears.let {
+            val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item, years)
+            adapter.setDropDownViewResource(R.layout.spinner)
+            it.adapter = adapter
+        }
     }
 
     override fun onAttach(context: Context) {
