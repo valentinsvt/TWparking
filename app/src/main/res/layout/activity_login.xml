@@ -80,9 +80,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/round_corners"
+                android:background="@drawable/round_corners_primary"
                 android:text="@string/login_action_sign_in"
-                android:textColor="?attr/colorBackgroundFloating"
+                android:textColor="@color/colorWhite"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 

@@ -2,7 +2,7 @@ package com.lzm.svt.twparking.modules.payments
 
 import org.json.JSONObject
 
-class PaymentsPresenter: PaymentsContracts.PaymentsPresenterType, PaymentsContracts.GeneratePaymentsDelegate {
+class PaymentsPresenter : PaymentsContracts.PaymentsPresenterType, PaymentsContracts.GeneratePaymentsDelegate {
     override fun success(response: JSONObject) {
         println("---->  " + response.get("result"))
     }
@@ -24,9 +24,9 @@ class PaymentsPresenter: PaymentsContracts.PaymentsPresenterType, PaymentsContra
         view?.populateSpinners(months, years)
     }
 
-    override fun generateButtonPressed(month: String, year: String) {
+    override fun generateButtonPressed(month: String, year: String, token: String) {
         router?.let {
-            interactor?.createPayments(this, month, year, it.mainWireframe.bffClient)
+            interactor?.createPayments(this, month, year, token, it.mainWireframe.bffClient)
         }
     }
 }

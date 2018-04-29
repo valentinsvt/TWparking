@@ -9,12 +9,12 @@ class ChargesContracts {
         var view: ChargesViewType?
         var router: ChargesWireframe?
         fun onGenerateChargesViewCreated()
-        fun generateButtonPressed(month: String, year: String)
+        fun generateButtonPressed(month: String, year: String, token: String)
     }
 
     interface ChargesInteractorType {
         fun loadMonthAndYearSpinners(delegate: GenerateChargesDelegate)
-        fun createCharges(delegate: GenerateChargesDelegate, month: String, year: String, client: BFFClient)
+        fun createCharges(delegate: GenerateChargesDelegate, month: String, year: String, token: String, client: BFFClient)
     }
 
     interface ChargesViewType {

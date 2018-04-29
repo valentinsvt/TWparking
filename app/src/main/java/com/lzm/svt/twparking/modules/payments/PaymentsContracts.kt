@@ -9,12 +9,12 @@ class PaymentsContracts {
         var view: PaymentsViewType?
         var router: PaymentsWireframe?
         fun onGeneratePaymentsViewCreated()
-        fun generateButtonPressed(month: String, year: String)
+        fun generateButtonPressed(month: String, year: String, token: String)
     }
 
     interface PaymentsInteractorType {
         fun loadMonthAndYearSpinners(delegate: GeneratePaymentsDelegate)
-        fun createPayments(delegate: GeneratePaymentsDelegate, month: String, year: String, client: BFFClient)
+        fun createPayments(delegate: GeneratePaymentsDelegate, month: String, year: String, token: String, client: BFFClient)
     }
 
     interface PaymentsViewType {

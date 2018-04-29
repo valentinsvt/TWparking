@@ -19,7 +19,7 @@ import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
-import java.util.HashMap
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -146,12 +146,12 @@ class LoginActivity : AppCompatActivity() {
 
         val postRequest = object : JsonObjectRequest(Method.POST, url + path, null,
                 Response.Listener { response ->
-                    showProgress(false)
                     val isActive = storeResponse(response, activity)
 
                     if (isActive) {
                         goToMain()
                     } else {
+                        showProgress(false)
                         password.error = getString(R.string.login_error_incorrect_password)
                         password.requestFocus()
                     }

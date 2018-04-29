@@ -15,7 +15,7 @@ import android.view.MenuItem
 import com.lzm.svt.twparking.contracts.FragmentContracts
 import com.lzm.svt.twparking.contracts.WireframeContracts
 import com.lzm.svt.twparking.modules.charges.ChargesListFragment
-import com.lzm.svt.twparking.modules.charges.dummy.DummyContent
+import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(),
         ChargesListFragment.OnListFragmentInteractionListener,
         WireframeContracts.WireframeDelegate {
 
-    override fun onChargePressed(item: DummyContent.DummyItem?) {
+    override fun onChargePressed(item: ChargeItem?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -48,10 +48,7 @@ class MainActivity : AppCompatActivity(),
         val userName = sharedPref.getString(getString(R.string.pref_userName_key), "NA")
         val userMail = sharedPref.getString(getString(R.string.pref_userEmail_key), "NA")
 
-        println("--------------------------------------------------------------")
-        println("$userId, $userName, $userMail")
-        println("--------------------------------------------------------------")
-
+        // TODO: set email and name in drawer here
     }
 
     override fun onBackPressed() {

@@ -4,7 +4,13 @@
 
   <string name="app_name">TWParking</string>
 
+  <string name="charges_card_amount_owed">Debe $%1$s</string>
+  <string name="charges_card_amount_payed">Pagado $%1$s el %2$s</string>
+  <string name="charges_card_delete">Eliminar</string>
+  <string name="charges_card_payed">Pagado</string>
+  <string name="charges_card_person_name">%1$s</string>
   <string name="charges_generate_button">Generar cobros</string>
+  <string name="charges_go">Go!</string>
   <string name="charges_title">Cobros</string>
 
   <string name="confirmation_cancel_button">Cancelar</string>

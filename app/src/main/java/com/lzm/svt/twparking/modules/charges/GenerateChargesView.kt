@@ -25,15 +25,21 @@ class GenerateChargesView : Fragment(), ChargesContracts.ChargesViewType {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter?.onGenerateChargesViewCreated()
+        val context = this.context
         generate_button.setOnClickListener {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.charges_generate_button)
-            dialogBuilder.setMessage(R.string.confirmation_message)
-            dialogBuilder.setPositiveButton(R.string.confirmation_continue_button, DialogInterface.OnClickListener { _, _ ->
-                presenter?.generateButtonPressed(month_spinner.selectedItem.toString(), year_spinner.selectedItem.toString())
-            })
-            dialogBuilder.setNegativeButton(R.string.confirmation_cancel_button, DialogInterface.OnClickListener { _, _ -> })
-            dialogBuilder.create().show()
+            val sharedPref = context?.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+            if (sharedPref != null) {
+                val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+
+                val dialogBuilder = AlertDialog.Builder(activity)
+                dialogBuilder.setTitle(R.string.charges_generate_button)
+                dialogBuilder.setMessage(R.string.confirmation_message)
+                dialogBuilder.setPositiveButton(R.string.confirmation_continue_button, DialogInterface.OnClickListener { _, _ ->
+                    presenter?.generateButtonPressed(month_spinner.selectedItem.toString(), year_spinner.selectedItem.toString(), token)
+                })
+                dialogBuilder.setNegativeButton(R.string.confirmation_cancel_button, DialogInterface.OnClickListener { _, _ -> })
+                dialogBuilder.create().show()
+            }
         }
     }
 

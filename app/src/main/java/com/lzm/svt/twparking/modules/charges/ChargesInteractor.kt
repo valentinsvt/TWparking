@@ -13,12 +13,12 @@ class ChargesInteractor : ChargesContracts.ChargesInteractorType {
         delegate.spinnersLoaded(months, years)
     }
 
-    override fun createCharges(delegate: ChargesContracts.GenerateChargesDelegate, month: String, year: String, client: BFFClient) {
+    override fun createCharges(delegate: ChargesContracts.GenerateChargesDelegate, month: String, year: String, token: String, client: BFFClient) {
         val path = "charges/createForMonth"
         val params = HashMap<String, String>()
         params["month"] = month
         params["year"] = year
-        client.makePostRequest(path, params, delegate)
+        client.makePostRequest(path, params, token, delegate)
     }
 
 }

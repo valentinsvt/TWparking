@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
-import com.lzm.svt.twparking.modules.charges.dummy.DummyContent
-import com.lzm.svt.twparking.modules.charges.dummy.DummyContent.DummyItem
+import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
+import kotlinx.android.synthetic.main.fragment_charge_list.*
 import java.util.*
 
 class ChargesListFragment : Fragment() {
@@ -32,41 +33,99 @@ class ChargesListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_charge_list, container, false)
+        return inflater.inflate(R.layout.fragment_charge_list, container, false)
+    }
 
-        val chargesList = view.findViewById(R.id.charges_list) as RecyclerView
-        with(chargesList) {
-            layoutManager = when {
-                columnCount <= 1 -> LinearLayoutManager(context)
-                else -> GridLayoutManager(context, columnCount)
-            }
-            adapter = MyChargeRecyclerViewAdapter(DummyContent.ITEMS, listener)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val months = arrayOf("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
-                "Octubre", "Noviembre", "Diciembre")
+        val months = arrayOf("ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE",
+                "OCTUBRE", "NOVIEMBRE", "DICIEMBRE")
 
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         val years = arrayOf(currentYear - 1, currentYear, currentYear + 1)
 
-        populateSpinners(view, months, years)
+        val context = this.context
 
-        return view
+        populateSpinners(months, years)
+
+        show_charges_button.setOnClickListener {
+            with(charges_list) {
+                layoutManager = when {
+                    columnCount <= 1 -> LinearLayoutManager(context)
+                    else -> GridLayoutManager(context, columnCount)
+                }
+                adapter = MyChargeRecyclerViewAdapter(context!!, ArrayList(), listener)
+            }
+            val sharedPref = context?.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+            if (sharedPref != null) {
+                val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+
+                val month = spinner_months.selectedItem.toString()
+                val year = spinner_years.selectedItem.toString()
+
+                val networkQueue = NetworkQueue.getInstance(context)
+                val url = "https://twparking-staging.herokuapp.com/api/"
+                val path = "Charges?filter={\"where\":{\"month\":\"$month\",\"year\":\"$year\"}, \"include\":[\"person\"]}"
+
+                val getRequest = object : JsonArrayRequest(Method.GET, url + path, null,
+                        Response.Listener { response ->
+                            val items: MutableList<ChargeItem> = ArrayList()
+
+                            for (i in 0..(response.length() - 1)) {
+                                val charge = response.getJSONObject(i)
+                                val id = charge.getInt("id")
+                                val amountPerson = charge.getDouble("amountPerson")
+                                val amountPayed = charge.getDouble("amountPayed")
+                                val date = charge.getString("date")
+                                val person = charge.getJSONObject("person")
+                                val name = person.getString("name")
+                                val preferredPayment = person.getString("preferredPaymentMethod")
+
+                                val item = ChargeItem(id.toString(),
+                                        amountPerson, amountPayed, date, name, preferredPayment)
+                                items.add(item)
+                            }
+
+                            val sortedList = items.sortedWith(compareBy({ it.amountPayed }, { it.name }))
+
+                            with(charges_list) {
+                                layoutManager = when {
+                                    columnCount <= 1 -> LinearLayoutManager(context)
+                                    else -> GridLayoutManager(context, columnCount)
+                                }
+                                adapter = MyChargeRecyclerViewAdapter(context, sortedList, listener)
+                            }
+                        },
+                        Response.ErrorListener {
+                            println("----------------------------------------------------------------")
+                            println("ERROR!!!")
+                            println(it)
+                            println("----------------------------------------------------------------")
+                        }
+                ) {
+                    override fun getHeaders(): MutableMap<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers["Content-Type"] = "application/json"
+                        headers["Accept"] = "application/json"
+                        headers["Authorization"] = token
+                        return headers
+                    }
+                }
+                networkQueue.addToRequestQueue(getRequest)
+            }
+        }
     }
 
 
-    private fun populateSpinners(view: View, months: Array<String>, years: Array<Int>) {
-
-        val spinnerMonths = view.findViewById(R.id.spinner_months) as Spinner
-        val spinnerYears = view.findViewById(R.id.spinner_years) as Spinner
-
-        spinnerMonths.let {
+    private fun populateSpinners(months: Array<String>, years: Array<Int>) {
+        spinner_months.let {
             val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item, months)
             adapter.setDropDownViewResource(R.layout.spinner)
             it.adapter = adapter
         }
 
-        spinnerYears.let {
+        spinner_years.let {
             val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_item, years)
             adapter.setDropDownViewResource(R.layout.spinner)
             it.adapter = adapter
@@ -88,7 +147,7 @@ class ChargesListFragment : Fragment() {
     }
 
     interface OnListFragmentInteractionListener {
-        fun onChargePressed(item: DummyItem?)
+        fun onChargePressed(item: ChargeItem?)
     }
 
     companion object {
