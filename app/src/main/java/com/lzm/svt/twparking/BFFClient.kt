@@ -8,7 +8,7 @@ import org.json.JSONObject
 import java.util.*
 
 class BFFClient(val networkQueue: NetworkQueue) {
-    val URL = "https://twparking-staging.herokuapp.com/api/"
+    val URL = Urls.BASE.value
 
     fun makePostRequest(path: String, params: HashMap<String, String>, token: String, delegate: HttpContracts.HttpDelegate) {
         val postRequest = object : JsonObjectRequest(Request.Method.POST, URL + path, null,

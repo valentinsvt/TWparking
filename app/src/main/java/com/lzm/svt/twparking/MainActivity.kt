@@ -22,11 +22,18 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 class MainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
         FragmentContracts.OnFragmentInteractionListener,
-        ChargesListFragment.OnListFragmentInteractionListener,
+        ChargesListFragment.OnChargeClickedInteractionListener,
         WireframeContracts.WireframeDelegate {
 
     override fun onChargePressed(item: ChargeItem?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (item != null) {
+            if (item.amountPayed == 0.0) {
+                // record charge
+            }
+            println("-----------------------------------------------------------")
+            println(item)
+            println("-----------------------------------------------------------")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

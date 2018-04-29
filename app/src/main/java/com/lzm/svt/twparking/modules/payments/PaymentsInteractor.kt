@@ -1,6 +1,7 @@
 package com.lzm.svt.twparking.modules.payments
 
 import com.lzm.svt.twparking.BFFClient
+import com.lzm.svt.twparking.Urls
 import java.util.*
 
 class PaymentsInteractor : PaymentsContracts.PaymentsInteractorType {
@@ -14,7 +15,7 @@ class PaymentsInteractor : PaymentsContracts.PaymentsInteractorType {
     }
 
     override fun createPayments(delegate: PaymentsContracts.GeneratePaymentsDelegate, month: String, year: String, token: String, client: BFFClient) {
-        val path = "payments/createForMonth"
+        val path = "${Urls.PAYMENTS}/createForMonth"
         val params = HashMap<String, String>()
         params["month"] = month
         params["year"] = year

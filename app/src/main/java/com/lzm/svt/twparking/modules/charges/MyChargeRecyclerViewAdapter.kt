@@ -11,14 +11,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.lzm.svt.twparking.R
-import com.lzm.svt.twparking.modules.charges.ChargesListFragment.OnListFragmentInteractionListener
+import com.lzm.svt.twparking.modules.charges.ChargesListFragment.OnChargeClickedInteractionListener
 import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.fragment_charge_item.view.*
 
 class MyChargeRecyclerViewAdapter(
         private val context: Context,
         private val mValues: List<ChargeItem>,
-        private val mListener: OnListFragmentInteractionListener?)
+        private val mListener: OnChargeClickedInteractionListener?)
     : RecyclerView.Adapter<MyChargeRecyclerViewAdapter.ViewHolder>() {
     private val mOnClickListener: View.OnClickListener
 
@@ -59,7 +59,7 @@ class MyChargeRecyclerViewAdapter(
 
         with(holder.mView) {
             tag = item
-//            setOnClickListener(mOnClickListener)
+            setOnClickListener(mOnClickListener)
         }
     }
 

@@ -17,11 +17,14 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.lzm.svt.twparking.MainActivity
 import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
+import com.lzm.svt.twparking.Urls
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
+
+    val url = Urls.BASE.value
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,8 +113,7 @@ class LoginActivity : AppCompatActivity() {
         val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
 
         val networkQueue = NetworkQueue.getInstance(this)
-        val url = "https://twparking-staging.herokuapp.com/api/"
-        val path = "People/$userId"
+        val path = "${Urls.PEOPLE}/$userId"
 
         showProgress(true)
         val getRequest = object : JsonObjectRequest(Method.GET, url + path, null,
@@ -135,8 +137,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginPostRequest(mEmail: String, mPassword: String) {
         val networkQueue = NetworkQueue.getInstance(this)
-        val url = "https://twparking-staging.herokuapp.com/api/"
-        val path = "People/login"
+        val path = "${Urls.PEOPLE}/login"
 
         val activity = this
 

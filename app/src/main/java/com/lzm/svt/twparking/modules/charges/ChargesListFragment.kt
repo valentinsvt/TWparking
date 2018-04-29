@@ -13,6 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
+import com.lzm.svt.twparking.Urls
 import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.fragment_charge_list.*
 import java.util.*
@@ -21,7 +22,7 @@ class ChargesListFragment : Fragment() {
 
     private var columnCount = 1
 
-    private var listener: OnListFragmentInteractionListener? = null
+    private var listener: OnChargeClickedInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +66,8 @@ class ChargesListFragment : Fragment() {
                 val year = spinner_years.selectedItem.toString()
 
                 val networkQueue = NetworkQueue.getInstance(context)
-                val url = "https://twparking-staging.herokuapp.com/api/"
-                val path = "Charges?filter={\"where\":{\"month\":\"$month\",\"year\":\"$year\"}, \"include\":[\"person\"]}"
+                val url = Urls.BASE.value
+                val path = "${Urls.CHARGES}?filter={\"where\":{\"month\":\"$month\",\"year\":\"$year\"}, \"include\":[\"person\"]}"
 
                 val getRequest = object : JsonArrayRequest(Method.GET, url + path, null,
                         Response.Listener { response ->
@@ -134,10 +135,10 @@ class ChargesListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
+        if (context is OnChargeClickedInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
+            throw RuntimeException(context.toString() + " must implement OnChargeClickedInteractionListener")
         }
     }
 
@@ -146,7 +147,7 @@ class ChargesListFragment : Fragment() {
         listener = null
     }
 
-    interface OnListFragmentInteractionListener {
+    interface OnChargeClickedInteractionListener {
         fun onChargePressed(item: ChargeItem?)
     }
 
