@@ -19,6 +19,7 @@ import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.fragment_charge_list.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,6 +27,8 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
 
     private var myAdapter: MyChargeRecyclerViewAdapter? = null
     private var columnCount = 1
+    private var payed = 0.0
+    private var total = 0.0
 
     override fun onChargePressed(item: ChargeItem?) {
         val activity = this.context
@@ -48,11 +51,12 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
                     requestParams["amountPayed"] = "${item.amountPerson}"
                     requestParams["date"] = date
 
-
                     val postRequest = object : JsonObjectRequest(Method.PATCH, url + path, null,
                             Response.Listener {
                                 Toast.makeText(activity, "Marcado ${item.name} como pagado", Toast.LENGTH_LONG).show()
                                 item.amountPayed = item.amountPerson
+                                payed += item.amountPayed
+                                charges_total_payed.text = getPayedLabel(activity)
                                 item.date = date
                                 myAdapter?.sort()
                             },
@@ -117,6 +121,8 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
 
         show_charges_button.setOnClickListener {
             val sharedPref = context.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+            payed = 0.0
+            total = 0.0
             if (sharedPref != null) {
                 val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
 
@@ -130,12 +136,14 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
                 val getRequest = object : JsonArrayRequest(Method.GET, url + path, null,
                         Response.Listener { response ->
                             processResponse(response, context)
+                            charges_total_payed.text = getPayedLabel(context)
                         },
                         Response.ErrorListener {
                             println("----------------------------------------------------------------")
                             println("ERROR!!!")
                             println(it)
                             println("----------------------------------------------------------------")
+                            charges_total_payed.text = getPayedLabel(context)
                         }
                 ) {
                     override fun getHeaders(): MutableMap<String, String> {
@@ -164,6 +172,9 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
             val name = person.getString("name")
             val preferredPayment = person.getString("preferredPaymentMethod")
 
+            payed += amountPayed
+            total += amountPerson
+
             val item = ChargeItem(id.toString(),
                     amountPerson, amountPayed, date, name, preferredPayment)
             items.add(item)
@@ -171,6 +182,14 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
 
         val sortedList = items.sortedWith(compareBy({ it.amountPayed }, { it.name }))
         myAdapter?.addAll(sortedList)
+    }
+
+    private fun getPayedLabel(context: Context): String? {
+        if (total == 0.0 && payed == 0.0) {
+            return ""
+        }
+        val nf = NumberFormat.getInstance()
+        return context.getString(R.string.charges_total_payed, nf.format(payed), nf.format(total))
     }
 
 

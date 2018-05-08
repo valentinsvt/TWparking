@@ -12,6 +12,7 @@
   <string name="charges_generate_button">Generar cobros</string>
   <string name="charges_go">Go!</string>
   <string name="charges_title">Cobros</string>
+  <string name="charges_total_payed">Pagado $%1$s de $%2$s</string>
 
   <string name="confirmation_cancel_button">Cancelar</string>
   <string name="confirmation_continue_button">Yolo</string>
