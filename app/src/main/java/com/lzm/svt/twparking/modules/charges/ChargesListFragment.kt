@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
+import com.lzm.svt.twparking.Months
 import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.Urls
@@ -106,8 +107,7 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val months = arrayOf("ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE",
-                "OCTUBRE", "NOVIEMBRE", "DICIEMBRE")
+        val months = Months.getAll()
 
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         val years = arrayOf(currentYear - 1, currentYear, currentYear + 1)

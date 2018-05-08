@@ -1,13 +1,13 @@
 package com.lzm.svt.twparking.modules.charges
 
 import com.lzm.svt.twparking.BFFClient
+import com.lzm.svt.twparking.Months
 import com.lzm.svt.twparking.Urls
 import java.util.*
 
 class ChargesInteractor : ChargesContracts.ChargesInteractorType {
     override fun loadMonthAndYearSpinners(delegate: ChargesContracts.GenerateChargesDelegate) {
-        val months = arrayOf("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
-                "Octubre", "Noviembre", "Diciembre")
+        val months = Months.getAll()
 
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         val years = arrayOf(currentYear - 1, currentYear, currentYear + 1)
