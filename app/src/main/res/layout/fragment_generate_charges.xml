@@ -48,7 +48,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/round_corners_primary"
+        android:background="@drawable/round_corners_accent"
         android:paddingLeft="35dp"
         android:paddingRight="35dp"
         android:text="@string/charges_generate_button"
