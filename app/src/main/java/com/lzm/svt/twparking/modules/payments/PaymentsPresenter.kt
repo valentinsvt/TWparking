@@ -4,7 +4,7 @@ import org.json.JSONObject
 
 class PaymentsPresenter : PaymentsContracts.PaymentsPresenterType, PaymentsContracts.GeneratePaymentsDelegate {
     override fun success(response: JSONObject) {
-        println("---->  " + response.get("result"))
+//        println("---->  " + response.get("result"))
     }
 
     override fun error() {

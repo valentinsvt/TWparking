@@ -5,7 +5,7 @@ import org.json.JSONObject
 class ChargesPresenter : ChargesContracts.ChargesPresenterType, ChargesContracts.GenerateChargesDelegate {
 
     override fun success(response: JSONObject) {
-        println("---->  " + response.get("result"))
+//        println("---->  " + response.get("result"))
     }
 
     override fun error() {
