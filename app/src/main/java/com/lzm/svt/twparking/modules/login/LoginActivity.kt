@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
         val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
 
         val networkQueue = NetworkQueue.getInstance(this)
-        val path = "${Urls.PEOPLE}/$userId"
+        val path = "${Urls.PEOPLE.value}/$userId"
 
         showProgress(true)
         val getRequest = object : JsonObjectRequest(Method.GET, url + path, null,
@@ -137,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginPostRequest(mEmail: String, mPassword: String) {
         val networkQueue = NetworkQueue.getInstance(this)
-        val path = "${Urls.PEOPLE}/login"
+        val path = "${Urls.PEOPLE.value}/login"
 
         val activity = this
 

@@ -3,26 +3,88 @@ package com.lzm.svt.twparking.modules.charges
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.Urls
 import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.fragment_charge_list.*
+import org.json.JSONArray
+import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
-class ChargesListFragment : Fragment() {
+class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
 
+    private var myAdapter: MyChargeRecyclerViewAdapter? = null
     private var columnCount = 1
 
-    private var listener: OnChargeClickedInteractionListener? = null
+    override fun onChargePressed(item: ChargeItem?) {
+        val activity = this.context
+        if (item != null && activity != null) {
+            if (item.amountPayed == 0.0) {
+                val sharedPref = activity.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+                if (sharedPref != null) {
+                    val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
+                    val networkQueue = NetworkQueue.getInstance(activity)
+                    val path = "${Urls.CHARGES.value}/${item.id}"
+
+                    val url = Urls.BASE.value
+
+                    val myFormat = "yyyy-MM-dd" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+                    val today = Calendar.getInstance().time
+                    val date = sdf.format(today)
+
+                    val requestParams = HashMap<String, String>()
+                    requestParams["amountPayed"] = "${item.amountPerson}"
+                    requestParams["date"] = date
+
+
+                    val postRequest = object : JsonObjectRequest(Method.PATCH, url + path, null,
+                            Response.Listener {
+                                Toast.makeText(activity, "Marcado ${item.name} como pagado", Toast.LENGTH_LONG).show()
+                                item.amountPayed = item.amountPerson
+                                item.date = date
+                                myAdapter?.sort()
+                            },
+                            Response.ErrorListener {
+                                Toast.makeText(activity, "ERROR!!!", Toast.LENGTH_SHORT).show()
+                                println("----------------------------------------------------------------")
+                                println("ERROR!!!")
+                                println(it)
+                                println("----------------------------------------------------------------")
+                            }
+                    ) {
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Content-Type"] = "application/json"
+                            headers["Accept"] = "application/json"
+                            headers["Authorization"] = token
+                            return headers
+                        }
+
+                        override fun getBody(): ByteArray {
+                            return JSONObject(requestParams).toString().toByteArray()
+                        }
+
+                        override fun getBodyContentType(): String {
+                            return "application/json"
+                        }
+                    }
+                    networkQueue.addToRequestQueue(postRequest)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,16 +111,12 @@ class ChargesListFragment : Fragment() {
         val context = this.context
 
         populateSpinners(months, years)
+        myAdapter = MyChargeRecyclerViewAdapter(context!!, ArrayList(), this)
+        charges_list.layoutManager = LinearLayoutManager(context)
+        charges_list.adapter = myAdapter
 
         show_charges_button.setOnClickListener {
-            with(charges_list) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyChargeRecyclerViewAdapter(context!!, ArrayList(), listener)
-            }
-            val sharedPref = context?.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
+            val sharedPref = context.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE)
             if (sharedPref != null) {
                 val token = sharedPref.getString(getString(R.string.pref_token_key), "NA")
 
@@ -67,36 +125,11 @@ class ChargesListFragment : Fragment() {
 
                 val networkQueue = NetworkQueue.getInstance(context)
                 val url = Urls.BASE.value
-                val path = "${Urls.CHARGES}?filter={\"where\":{\"month\":\"$month\",\"year\":\"$year\"}, \"include\":[\"person\"]}"
+                val path = "${Urls.CHARGES.value}?filter={\"where\":{\"month\":\"$month\",\"year\":\"$year\"}, \"include\":[\"person\"]}"
 
                 val getRequest = object : JsonArrayRequest(Method.GET, url + path, null,
                         Response.Listener { response ->
-                            val items: MutableList<ChargeItem> = ArrayList()
-
-                            for (i in 0..(response.length() - 1)) {
-                                val charge = response.getJSONObject(i)
-                                val id = charge.getInt("id")
-                                val amountPerson = charge.getDouble("amountPerson")
-                                val amountPayed = charge.getDouble("amountPayed")
-                                val date = charge.getString("date")
-                                val person = charge.getJSONObject("person")
-                                val name = person.getString("name")
-                                val preferredPayment = person.getString("preferredPaymentMethod")
-
-                                val item = ChargeItem(id.toString(),
-                                        amountPerson, amountPayed, date, name, preferredPayment)
-                                items.add(item)
-                            }
-
-                            val sortedList = items.sortedWith(compareBy({ it.amountPayed }, { it.name }))
-
-                            with(charges_list) {
-                                layoutManager = when {
-                                    columnCount <= 1 -> LinearLayoutManager(context)
-                                    else -> GridLayoutManager(context, columnCount)
-                                }
-                                adapter = MyChargeRecyclerViewAdapter(context, sortedList, listener)
-                            }
+                            processResponse(response, context)
                         },
                         Response.ErrorListener {
                             println("----------------------------------------------------------------")
@@ -118,6 +151,28 @@ class ChargesListFragment : Fragment() {
         }
     }
 
+    private fun processResponse(response: JSONArray, context: Context) {
+        val items: MutableList<ChargeItem> = ArrayList()
+
+        for (i in 0..(response.length() - 1)) {
+            val charge = response.getJSONObject(i)
+            val id = charge.getInt("id")
+            val amountPerson = charge.getDouble("amountPerson")
+            val amountPayed = charge.getDouble("amountPayed")
+            val date = charge.getString("date")
+            val person = charge.getJSONObject("person")
+            val name = person.getString("name")
+            val preferredPayment = person.getString("preferredPaymentMethod")
+
+            val item = ChargeItem(id.toString(),
+                    amountPerson, amountPayed, date, name, preferredPayment)
+            items.add(item)
+        }
+
+        val sortedList = items.sortedWith(compareBy({ it.amountPayed }, { it.name }))
+        myAdapter?.addAll(sortedList)
+    }
+
 
     private fun populateSpinners(months: Array<String>, years: Array<Int>) {
         spinner_months.let {
@@ -131,24 +186,6 @@ class ChargesListFragment : Fragment() {
             adapter.setDropDownViewResource(R.layout.spinner)
             it.adapter = adapter
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnChargeClickedInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnChargeClickedInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnChargeClickedInteractionListener {
-        fun onChargePressed(item: ChargeItem?)
     }
 
     companion object {

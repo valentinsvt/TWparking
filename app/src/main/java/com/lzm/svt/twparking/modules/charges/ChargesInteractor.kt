@@ -15,7 +15,7 @@ class ChargesInteractor : ChargesContracts.ChargesInteractorType {
     }
 
     override fun createCharges(delegate: ChargesContracts.GenerateChargesDelegate, month: String, year: String, token: String, client: BFFClient) {
-        val path = "${Urls.CHARGES}/createForMonth"
+        val path = "${Urls.CHARGES.value}/createForMonth"
         val params = HashMap<String, String>()
         params["month"] = month
         params["year"] = year

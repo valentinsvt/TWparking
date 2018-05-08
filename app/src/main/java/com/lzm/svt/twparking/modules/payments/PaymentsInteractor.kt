@@ -15,7 +15,7 @@ class PaymentsInteractor : PaymentsContracts.PaymentsInteractorType {
     }
 
     override fun createPayments(delegate: PaymentsContracts.GeneratePaymentsDelegate, month: String, year: String, token: String, client: BFFClient) {
-        val path = "${Urls.PAYMENTS}/createForMonth"
+        val path = "${Urls.PAYMENTS.value}/createForMonth"
         val params = HashMap<String, String>()
         params["month"] = month
         params["year"] = year

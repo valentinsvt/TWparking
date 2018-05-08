@@ -14,27 +14,14 @@ import android.view.Menu
 import android.view.MenuItem
 import com.lzm.svt.twparking.contracts.FragmentContracts
 import com.lzm.svt.twparking.contracts.WireframeContracts
-import com.lzm.svt.twparking.modules.charges.ChargesListFragment
-import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+
 
 class MainActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
         FragmentContracts.OnFragmentInteractionListener,
-        ChargesListFragment.OnChargeClickedInteractionListener,
         WireframeContracts.WireframeDelegate {
-
-    override fun onChargePressed(item: ChargeItem?) {
-        if (item != null) {
-            if (item.amountPayed == 0.0) {
-                // record charge
-            }
-            println("-----------------------------------------------------------")
-            println(item)
-            println("-----------------------------------------------------------")
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
