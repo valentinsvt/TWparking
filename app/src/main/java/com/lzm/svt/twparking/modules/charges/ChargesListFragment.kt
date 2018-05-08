@@ -42,8 +42,8 @@ class ChargesListFragment : Fragment(), OnChargeClickedInteractionListener {
 
                     val url = Urls.BASE.value
 
-                    val myFormat = "yyyy-MM-dd" // mention the format you need
-                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+                    val dateFormat = "yyyy-MM-dd"
+                    val sdf = SimpleDateFormat(dateFormat, Locale.US)
                     val today = Calendar.getInstance().time
                     val date = sdf.format(today)
 
