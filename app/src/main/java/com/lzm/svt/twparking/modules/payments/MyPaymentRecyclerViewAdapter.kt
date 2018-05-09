@@ -1,4 +1,4 @@
-package com.lzm.svt.twparking.modules.charges
+package com.lzm.svt.twparking.modules.payments
 
 
 import android.content.Context
@@ -11,49 +11,49 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.lzm.svt.twparking.R
-import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
-import kotlinx.android.synthetic.main.fragment_charge_item.view.*
+import com.lzm.svt.twparking.modules.payments.payment.PaymentItem
+import kotlinx.android.synthetic.main.fragment_payment_item.view.*
 
-class MyChargeRecyclerViewAdapter(
+class MyPaymentRecyclerViewAdapter(
         private val context: Context,
-        private var mValues: List<ChargeItem>,
-        private val mListener: OnChargeClickedInteractionListener?)
-    : RecyclerView.Adapter<MyChargeRecyclerViewAdapter.ViewHolder>() {
+        private var mValues: List<PaymentItem>,
+        private val mListener: OnPaymentClickedInteractionListener?)
+    : RecyclerView.Adapter<MyPaymentRecyclerViewAdapter.ViewHolder>() {
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as ChargeItem
-            mListener?.onChargePressed(item)
+            val item = v.tag as PaymentItem
+            mListener?.onPaymentPressed(item)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_charge_item, parent, false)
+                .inflate(R.layout.fragment_payment_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.nameView.text = context.getString(R.string.charges_card_person_name, item.name)
+        holder.nameView.text = context.getString(R.string.payments_card_owner_name, item.name)
 
         if (item.amountPayed == 0.0) {
             holder.owesLayout.visibility = View.VISIBLE
             holder.payedLayout.visibility = View.GONE
 
-            holder.view.setCardBackgroundColor(context.getColor(R.color.color_charge_owed))
+            holder.view.setCardBackgroundColor(context.getColor(R.color.color_payment_owed))
             holder.imageView.setBackgroundResource(R.drawable.ic_owed_black_24dp)
 
-            holder.owesAmountView.text = context.getString(R.string.charges_card_amount_owed, item.amountPerson)
+            holder.owesAmountView.text = context.getString(R.string.payments_card_amount_owed, item.amount)
         } else {
             holder.payedLayout.visibility = View.VISIBLE
             holder.owesLayout.visibility = View.GONE
 
-            holder.view.setCardBackgroundColor(context.getColor(R.color.color_charge_payed))
+            holder.view.setCardBackgroundColor(context.getColor(R.color.color_payment_payed))
             holder.imageView.setBackgroundResource(R.drawable.ic_payed_black_24dp)
 
-            holder.payedAmountView.text = context.getString(R.string.charges_card_amount_payed, item.amountPayed, item.date)
+            holder.payedAmountView.text = context.getString(R.string.payments_card_amount_payed, item.amountPayed, item.date)
         }
 
         with(holder.mView) {
@@ -68,7 +68,7 @@ class MyChargeRecyclerViewAdapter(
         this.notifyDataSetChanged()
     }
 
-    fun addAll(newList: List<ChargeItem>) {
+    fun addAll(newList: List<PaymentItem>) {
         mValues = newList
         this.notifyDataSetChanged()
     }
@@ -79,9 +79,9 @@ class MyChargeRecyclerViewAdapter(
         val imageView: ImageView = mView.item_image
 
         val owesLayout: ConstraintLayout = mView.layout_person_owes
-        val owesAmountView: TextView = mView.charge_owes_amount
+        val owesAmountView: TextView = mView.payment_owes_amount
 
         val payedLayout: ConstraintLayout = mView.layout_person_payed
-        val payedAmountView: TextView = mView.charge_payed_amount
+        val payedAmountView: TextView = mView.payment_payed_amount
     }
 }

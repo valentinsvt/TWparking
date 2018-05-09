@@ -20,6 +20,9 @@ class PaymentsWireframe(override var mainWireframe: MainWireframe) : WireframeCo
                 generatePaymentFragment.presenter = presenter
                 return generatePaymentFragment
             }
+            R.id.drawer_payments_list_option -> {
+                return PaymentsListFragment.newInstance(1)
+            }
         }
         return null
     }
