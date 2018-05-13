@@ -1,14 +1,15 @@
 package com.lzm.svt.twparking.modules.payments
 
-import org.json.JSONObject
+import com.android.volley.VolleyError
+import org.json.JSONArray
 
 class PaymentsPresenter : PaymentsContracts.PaymentsPresenterType, PaymentsContracts.GeneratePaymentsDelegate {
-    override fun success(response: JSONObject) {
-//        println("---->  " + response.get("result"))
+    override fun success(response: JSONArray) {
+        println("----> Success:  $response")
     }
 
-    override fun error() {
-        println("---->  Error")
+    override fun error(error: VolleyError) {
+        println("---->  Error ${error.message}")
 
     }
 

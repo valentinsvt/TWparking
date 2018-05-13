@@ -12,10 +12,10 @@ import android.widget.Toast
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.lzm.svt.twparking.Utils
 import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.Urls
+import com.lzm.svt.twparking.Utils
 import com.lzm.svt.twparking.Utils.Companion.formatNumber
 import com.lzm.svt.twparking.modules.payments.payment.PaymentItem
 import kotlinx.android.synthetic.main.fragment_payment_list.*
@@ -161,14 +161,13 @@ class PaymentsListFragment : Fragment(), OnPaymentClickedInteractionListener {
 
     private fun processResponse(response: JSONArray, context: Context) {
         val items: MutableList<PaymentItem> = ArrayList()
-
         for (i in 0..(response.length() - 1)) {
             val payment = response.getJSONObject(i)
             val id = payment.getInt("id")
             val amount = payment.getDouble("amount")
             val amountPayed = payment.getDouble("amountPayed")
             val date = payment.getString("date")
-            val person = payment.getJSONObject("person")
+            val person = payment.getJSONObject("owner")
             val name = person.getString("name")
 
             payed += amountPayed
