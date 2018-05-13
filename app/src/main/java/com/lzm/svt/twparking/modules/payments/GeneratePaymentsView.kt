@@ -9,11 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.contracts.FragmentContracts
 import kotlinx.android.synthetic.main.fragment_generate_payments.*
 
 class GeneratePaymentsView : Fragment(), PaymentsContracts.PaymentsViewType {
+    override fun showToast(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+    }
+
     private var listener: FragmentContracts.OnFragmentInteractionListener? = null
     var presenter: PaymentsContracts.PaymentsPresenterType? = null
 

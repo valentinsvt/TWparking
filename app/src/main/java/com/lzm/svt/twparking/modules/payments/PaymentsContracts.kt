@@ -19,6 +19,7 @@ class PaymentsContracts {
 
     interface PaymentsViewType {
         fun populateSpinners(months: Array<String>, years: Array<Int>)
+        fun showToast(message: String)
     }
 
     interface GeneratePaymentsDelegate : HttpContracts.HttpDelegate {

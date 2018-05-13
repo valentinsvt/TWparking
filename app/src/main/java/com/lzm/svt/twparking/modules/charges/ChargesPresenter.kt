@@ -1,11 +1,11 @@
 package com.lzm.svt.twparking.modules.charges
 
 import com.android.volley.VolleyError
-import org.json.JSONArray
+import org.json.JSONObject
 
 class ChargesPresenter : ChargesContracts.ChargesPresenterType, ChargesContracts.GenerateChargesDelegate {
 
-    override fun success(response: JSONArray) {
+    override fun success(response: JSONObject) {
 //        println("---->  " + response.get("result"))
     }
 

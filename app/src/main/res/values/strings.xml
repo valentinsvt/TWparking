@@ -9,6 +9,7 @@
   <string name="charges_card_delete">Eliminar</string>
   <string name="charges_card_payed">Pagado</string>
   <string name="charges_card_person_name">%1$s</string>
+  <string name="charges_create_for_month_success">Insertados %1$s</string>
   <string name="charges_generate_button">Generar cobros</string>
   <string name="charges_go">Go!</string>
   <string name="charges_title">Cobros</string>
@@ -26,6 +27,8 @@
   <string name="login_error_invalid_password">This password is too short</string>
   <string name="login_prompt_email">Email</string>
   <string name="login_prompt_password">Password</string>
+
+  <string name="misc_error">Error</string>
 
   <string-array name="month_array">
     <item>January</item>
@@ -57,6 +60,7 @@
   <string name="payments_card_amount_payed">Pagado $%1$s el %2$s</string>
   <string name="payments_card_owner_name">%1$s</string>
   <string name="payments_card_payed">Pagado</string>
+  <string name="payments_create_for_month_success">Insertados %1$s</string>
   <string name="payments_generate_button">Generar pagos</string>
   <string name="payments_go">Go!</string>
   <string name="payments_title">Pagos</string>
