@@ -12,16 +12,15 @@ import android.widget.Toast
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.lzm.svt.twparking.Utils
 import com.lzm.svt.twparking.NetworkQueue
 import com.lzm.svt.twparking.R
 import com.lzm.svt.twparking.Urls
+import com.lzm.svt.twparking.Utils
 import com.lzm.svt.twparking.Utils.Companion.formatNumber
 import com.lzm.svt.twparking.modules.charges.charge.ChargeItem
 import kotlinx.android.synthetic.main.fragment_charge_list.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

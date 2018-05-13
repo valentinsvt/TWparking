@@ -137,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginPostRequest(mEmail: String, mPassword: String) {
         val networkQueue = NetworkQueue.getInstance(this)
-        val path = "${Urls.PEOPLE.value}/login"
+        val path = "${Urls.PEOPLE.value}/${Urls.LOGIN.value}"
 
         val activity = this
 

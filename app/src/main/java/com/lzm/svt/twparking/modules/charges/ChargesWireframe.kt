@@ -23,6 +23,9 @@ class ChargesWireframe(override var mainWireframe: MainWireframe) : WireframeCon
             R.id.drawer_charges_list_option -> {
                 return ChargesListFragment.newInstance(1)
             }
+            R.id.drawer_charges_mail_option -> {
+                return MailFragment.newInstance()
+            }
         }
         return null
     }

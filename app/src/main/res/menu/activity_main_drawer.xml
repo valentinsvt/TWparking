@@ -12,7 +12,6 @@
         <item
             android:id="@+id/drawer_payments_generate_option"
             android:title="@string/navigation_payments_generate" />
-
     </group>
     <group
         android:id="@+id/drawer_group_charges"
@@ -24,6 +23,11 @@
             android:id="@+id/drawer_charges_generate_option"
             android:title="@string/navigation_charges_generate" />
     </group>
-
-
+    <group
+        android:id="@+id/drawer_group_mail"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_charges_mail_option"
+            android:title="@string/navigation_create_mail" />
+    </group>
 </menu>

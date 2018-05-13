@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-  <string name="action_settings">Settings</string>
+    <string name="action_settings">Settings</string>
 
-  <string name="app_name">TWParking</string>
+    <string name="app_name">TWParking</string>
 
-  <string name="charges_card_amount_owed">Debe $%1$s</string>
-  <string name="charges_card_amount_payed">Pagado $%1$s el %2$s</string>
-  <string name="charges_card_delete">Eliminar</string>
-  <string name="charges_card_payed">Pagado</string>
-  <string name="charges_card_person_name">%1$s</string>
-  <string name="charges_create_for_month_success">Insertados %1$s</string>
-  <string name="charges_generate_button">Generar cobros</string>
-  <string name="charges_go">Go!</string>
-  <string name="charges_title">Cobros</string>
-  <string name="charges_total_payed">Pagado $%1$s de $%2$s</string>
+    <string name="charges_card_amount_owed">Debe $%1$s</string>
+    <string name="charges_card_amount_payed">Pagado $%1$s el %2$s</string>
+    <string name="charges_card_delete">Eliminar</string>
+    <string name="charges_card_payed">Pagado</string>
+    <string name="charges_card_person_name">%1$s</string>
+    <string name="charges_create_for_month_success">Insertados %1$s</string>
+    <string name="charges_generate_button">Generar cobros</string>
+    <string name="charges_go">Go!</string>
+    <string name="charges_title">Cobros</string>
+    <string name="charges_total_payed">Pagado $%1$s de $%2$s</string>
 
-  <string name="confirmation_cancel_button">Cancelar</string>
-  <string name="confirmation_continue_button">Yolo</string>
-  <string name="confirmation_message">Está seguro? Está acción no se puede deshacer</string>
+    <string name="confirmation_cancel_button">Cancelar</string>
+    <string name="confirmation_continue_button">Yolo</string>
+    <string name="confirmation_message">Está seguro? Está acción no se puede deshacer</string>
 
-  <string name="login_action_sign_in">Sign in</string>
-  <string name="login_action_sign_in_short">Sign in</string>
-  <string name="login_error_field_required">This field is required</string>
-  <string name="login_error_incorrect_password">This password is incorrect</string>
-  <string name="login_error_invalid_email">This email address is invalid</string>
-  <string name="login_error_invalid_password">This password is too short</string>
-  <string name="login_prompt_email">Email</string>
-  <string name="login_prompt_password">Password</string>
+    <string name="login_action_sign_in">Sign in</string>
+    <string name="login_action_sign_in_short">Sign in</string>
+    <string name="login_error_field_required">This field is required</string>
+    <string name="login_error_incorrect_password">This password is incorrect</string>
+    <string name="login_error_invalid_email">This email address is invalid</string>
+    <string name="login_error_invalid_password">This password is too short</string>
+    <string name="login_prompt_email">Email</string>
+    <string name="login_prompt_password">Password</string>
 
-  <string name="misc_error">Error</string>
+    <string name="misc_error">Error</string>
 
-  <string-array name="month_array">
-    <item>January</item>
-    <item>February</item>
-    <item>March</item>
-    <item>April</item>
-    <item>May</item>
-    <item>June</item>
-    <item>July</item>
-    <item>August</item>
-    <item>September</item>
-    <item>October</item>
-    <item>November</item>
-    <item>December</item>
-  </string-array>
+    <string-array name="month_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 
-  <string name="nav_header_desc">Navigation header</string>
-  <string name="nav_header_subtitle">Nth</string>
-  <string name="nav_header_title">TW Parking</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_subtitle">Nth</string>
+    <string name="nav_header_title">TW Parking</string>
 
-  <string name="navigation_charges_generate">Generar cobros</string>
-  <string name="navigation_charges_list">Lista de cobros</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_payments_generate">Generar pagos</string>
-  <string name="navigation_payments_list">Lista de pagos</string>
+    <string name="navigation_charges_generate">Generar cobros</string>
+    <string name="navigation_charges_list">Lista de cobros</string>
+    <string name="navigation_create_mail">Crear mail</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_payments_generate">Generar pagos</string>
+    <string name="navigation_payments_list">Lista de pagos</string>
 
-  <string name="payments_card_amount_owed">Debo $%1$s</string>
-  <string name="payments_card_amount_payed">Pagado $%1$s el %2$s</string>
-  <string name="payments_card_owner_name">%1$s</string>
-  <string name="payments_card_payed">Pagado</string>
-  <string name="payments_card_payment_info">%1$s</string>
-  <string name="payments_create_for_month_success">Insertados %1$s</string>
-  <string name="payments_generate_button">Generar pagos</string>
-  <string name="payments_go">Go!</string>
-  <string name="payments_title">Pagos</string>
-  <string name="payments_total_payed">Pagado $%1$s de $%2$s</string>
+    <string name="payments_card_amount_owed">Debo $%1$s</string>
+    <string name="payments_card_amount_payed">Pagado $%1$s el %2$s</string>
+    <string name="payments_card_owner_name">%1$s</string>
+    <string name="payments_card_payed">Pagado</string>
+    <string name="payments_card_payment_info">%1$s</string>
+    <string name="payments_create_for_month_success">Insertados %1$s</string>
+    <string name="payments_generate_button">Generar pagos</string>
+    <string name="payments_go">Go!</string>
+    <string name="payments_title">Pagos</string>
+    <string name="payments_total_payed">Pagado $%1$s de $%2$s</string>
 
-  <string name="pref_file_key">preferences</string>
-  <string name="pref_token_key">token_key</string>
-  <string name="pref_userEmail_key">userEmail_key</string>
-  <string name="pref_userId_key">userId_key</string>
-  <string name="pref_userIsAdmin_key">userIsAdmin_key</string>
-  <string name="pref_userName_key">userName_key</string>
+    <string name="pref_file_key">preferences</string>
+    <string name="pref_token_key">token_key</string>
+    <string name="pref_userEmail_key">userEmail_key</string>
+    <string name="pref_userId_key">userId_key</string>
+    <string name="pref_userIsAdmin_key">userIsAdmin_key</string>
+    <string name="pref_userName_key">userName_key</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mail_hint">Contenido del mail</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
