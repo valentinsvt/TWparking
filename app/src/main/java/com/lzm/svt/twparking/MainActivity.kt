@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity(),
         val userMail = sharedPref.getString(getString(R.string.pref_userEmail_key), "NA")
 
         // TODO: set email and name in drawer here
+        // TODO: open default fragment (places list)
     }
 
     override fun onBackPressed() {

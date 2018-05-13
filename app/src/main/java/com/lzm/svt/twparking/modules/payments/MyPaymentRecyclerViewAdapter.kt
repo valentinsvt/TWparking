@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.lzm.svt.twparking.R
+import com.lzm.svt.twparking.Utils.Companion.formatNumber
 import com.lzm.svt.twparking.modules.payments.payment.PaymentItem
 import kotlinx.android.synthetic.main.fragment_payment_item.view.*
 
@@ -45,7 +46,8 @@ class MyPaymentRecyclerViewAdapter(
             holder.view.setCardBackgroundColor(context.getColor(R.color.color_payment_owed))
             holder.imageView.setBackgroundResource(R.drawable.ic_owed_black_24dp)
 
-            holder.owesAmountView.text = context.getString(R.string.payments_card_amount_owed, item.amount)
+            holder.owesPaymentInfo.text = context.getString(R.string.payments_card_payment_info, item.paymentInfo)
+            holder.owesAmountView.text = context.getString(R.string.payments_card_amount_owed, formatNumber(item.amount))
         } else {
             holder.payedLayout.visibility = View.VISIBLE
             holder.owesLayout.visibility = View.GONE
@@ -53,7 +55,7 @@ class MyPaymentRecyclerViewAdapter(
             holder.view.setCardBackgroundColor(context.getColor(R.color.color_payment_payed))
             holder.imageView.setBackgroundResource(R.drawable.ic_payed_black_24dp)
 
-            holder.payedAmountView.text = context.getString(R.string.payments_card_amount_payed, item.amountPayed, item.date)
+            holder.payedAmountView.text = context.getString(R.string.payments_card_amount_payed, formatNumber(item.amountPayed), item.date)
         }
 
         with(holder.mView) {
@@ -80,6 +82,7 @@ class MyPaymentRecyclerViewAdapter(
 
         val owesLayout: ConstraintLayout = mView.layout_person_owes
         val owesAmountView: TextView = mView.payment_owes_amount
+        val owesPaymentInfo: TextView = mView.payment_owes_payment_info
 
         val payedLayout: ConstraintLayout = mView.layout_person_payed
         val payedAmountView: TextView = mView.payment_payed_amount

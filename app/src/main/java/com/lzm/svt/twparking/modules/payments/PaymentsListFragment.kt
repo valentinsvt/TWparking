@@ -169,11 +169,12 @@ class PaymentsListFragment : Fragment(), OnPaymentClickedInteractionListener {
             val date = payment.getString("date")
             val person = payment.getJSONObject("owner")
             val name = person.getString("name")
+            val paymentInfo = person.getString("paymentInfo")
 
             payed += amountPayed
             total += amount
 
-            val item = PaymentItem(id.toString(), amount, amountPayed, date, name)
+            val item = PaymentItem(id.toString(), amount, amountPayed, date, name, paymentInfo)
             items.add(item)
         }
 
